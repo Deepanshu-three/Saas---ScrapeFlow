@@ -3,6 +3,7 @@
 import { Workflow } from '@prisma/client'
 import React from 'react'
 import {ReactFlowProvider} from '@xyflow/react'
+import FlowEditor from './FlowEditor'
 
 function Editor({workflow} : {workflow : Workflow}) {
   return (
