@@ -21,7 +21,7 @@ function Topbar({title, subTitle, workflowId} : Props) {
 
   return (
     <header 
-     className='flex border-p-2 border-separate justify-between items-center w-full h-[60px] sticky top-0 bg-background z-10'
+     className='flex border-b-2 border-separate justify-between items-center w-full h-[60px] sticky top-0 bg-background z-10'
     >
         <div className="flex gap-1 flex1">
             <TooltipWrapper content='back'>
