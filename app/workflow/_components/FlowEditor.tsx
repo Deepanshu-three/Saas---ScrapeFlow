@@ -1,12 +1,12 @@
 'use client'
 import { Workflow } from '@prisma/client'
 import { Background, BackgroundVariant, Controls, ReactFlow, useEdgesState, useNodesState } from '@xyflow/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import "@xyflow/react/dist/style.css"
 import { CreateFlowNode } from '@/lib/workflow/createFlowNode'
 import { TaskType } from '@/types/task'
-import NodeComponent from '@/app/(dashboard)/workflows/_components/nodes/NodeComponent'
+import NodeComponent from '@/app/workflow/_components/nodes/NodeComponent'
 
 
 const nodeTypes = {
@@ -20,10 +20,25 @@ const fitViewOptions = {
 function FlowEditor({workflow} : {workflow : Workflow}) {
 
 
-  const [nodes, setNodes, onNodesChange] = useNodesState([
-    CreateFlowNode(TaskType.LAUNCH_BROWSER)
-  ])
+  const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
+
+  useEffect(() => {
+    console.log("Updating flow:", workflow.defination);
+    try {
+      const flow = JSON.parse(workflow.defination);
+      if (!flow) return;
+  
+      // Log to check what nodes and edges are being set
+      console.log("Nodes:", flow.nodes);
+      console.log("Edges:", flow.edges);
+  
+      setNodes(flow.nodes || []);
+      setEdges(flow.edges || []);
+    } catch (error) {
+      console.error("Error parsing workflow definition:", error);
+    }
+  }, [workflow.defination, setNodes, setEdges]);
 
   return (
     <main className="h-full w-full">
