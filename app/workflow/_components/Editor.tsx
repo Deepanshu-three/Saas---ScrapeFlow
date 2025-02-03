@@ -6,9 +6,11 @@ import {ReactFlowProvider} from '@xyflow/react'
 import FlowEditor from './FlowEditor'
 import Topbar from './topbar/Topbar'
 import TaksMenu from './TaksMenu'
+import {  FlowValidationContextProvider } from '@/components/context/FlowValidationContext'
 
 function Editor({workflow} : {workflow : Workflow}) {
   return (
+    <FlowValidationContextProvider>
     <ReactFlowProvider>
       <Topbar title='Workflow Editor' subTitle={workflow.name}  workflowId={workflow.id}/>
         <div className="flex flex-col h-full w-full overflow-hidden">
@@ -18,6 +20,7 @@ function Editor({workflow} : {workflow : Workflow}) {
             </section>
         </div>
     </ReactFlowProvider>
+    </FlowValidationContextProvider>
   )
 }
  
