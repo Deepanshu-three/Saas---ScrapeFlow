@@ -109,6 +109,10 @@ function ExecutionViewer({ initialData }: { initialData: ExecutionData }) {
 
             </aside>
             
+            <div className="flex w-full h-full">
+                <pre>{JSON.stringify(phaseDetail.data, null, 4)}</pre>
+            </div>
+
         </div>
     )
 }

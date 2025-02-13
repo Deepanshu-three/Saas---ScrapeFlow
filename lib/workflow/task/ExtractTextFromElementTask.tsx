@@ -19,7 +19,7 @@ export const  ExtractTextFromElementTask = {
             varient: "textarea"
         },
         {
-            name: "Selector ",
+            name: "Selector",
             type: TaskParamType.STRING,
             required: true,
         }
