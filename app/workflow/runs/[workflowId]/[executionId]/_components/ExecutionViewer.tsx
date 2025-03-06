@@ -25,7 +25,7 @@ import { DatesToDurationString } from "@/lib/helper/dates";
 import { GetPhasesTotalCost } from "@/lib/helper/phases";
 import { cn } from "@/lib/utils";
 import { LogLevel } from "@/types/log";
-import { WorkflowExecutionStatus } from "@/types/workflow";
+import { ExecutionPhaseStatus, WorkflowExecutionStatus } from "@/types/workflow";
 import { ExecutionLog } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
@@ -40,8 +40,10 @@ import {
   LucideIcon,
   WorkflowIcon,
 } from "lucide-react";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { object } from "zod";
+import PhaseStatusBadge from "./PhaseStatusBadge";
+import ReactCountUpWrapper from "@/components/ReactCountUpWrapper";
 
 type ExecutionData = Awaited<ReturnType<typeof GetWorkflowExecutionWithPhases>>;
 
@@ -70,6 +72,27 @@ function ExecutionViewer({ initialData }: { initialData: ExecutionData }) {
   const creditsConsumed = GetPhasesTotalCost(query.data?.phases || []);
 
   const isRunning = query.data?.status === WorkflowExecutionStatus.RUNNING;
+
+  useEffect(() => {
+    const phases = query.data?.phases || [];
+    
+    if(isRunning){
+      const phaseToSelect = phases.toSorted((a,b) => 
+        a.startedAt! > b.startedAt! ? -1 : 1
+      )[0];
+
+      setSelectedPhase(phaseToSelect.id);
+      
+      return
+    }
+
+    const phaseToSelect = phases.toSorted((a,b) => 
+      a.completedAt! > b.completedAt! ? -1 : 1
+    )[0];
+
+    setSelectedPhase(phaseToSelect.id);
+
+  }, [query.data?.phases, isRunning, setSelectedPhase])
 
   return (
     <div className="flex w-full h-full">
@@ -108,7 +131,7 @@ function ExecutionViewer({ initialData }: { initialData: ExecutionData }) {
           <ExecutionLabel
             icon={Coins}
             label="Credits consumed"
-            value={creditsConsumed}
+            value={<ReactCountUpWrapper value={creditsConsumed}/>}
           />
         </div>
 
@@ -138,8 +161,7 @@ function ExecutionViewer({ initialData }: { initialData: ExecutionData }) {
                 <Badge variant={"outline"}>{index + 1}</Badge>
                 <p className="font-semibold">{phase.name}</p>
               </div>
-
-              <p className="text-xs text-muted-foreground">{phase.status}</p>
+              <PhaseStatusBadge status={phase.status as ExecutionPhaseStatus} />
             </Button>
           ))}
         </div>
@@ -169,7 +191,7 @@ function ExecutionViewer({ initialData }: { initialData: ExecutionData }) {
                   <CoinsIcon size={18} className="stroke-muted-foreground" />
                   <span>Credits</span>
                 </div>
-                <span>TODO</span>
+                <span>{phaseDetail.data.creditsConsumed}</span>
               </Badge>
               <Badge variant={"outline"} className="space-x-4">
                 <div className="flex gap-1 items-center">

@@ -7,7 +7,7 @@ export async function PageToHtmlExecutor(
 ): Promise<boolean>{
 
     try {
-
+        
         const html = await environment.getPage()!.content();
         environment.setOutputs("Html", html)
         return true
@@ -16,7 +16,4 @@ export async function PageToHtmlExecutor(
         environment.log.error(error.message)
         return false;
     }
-
-    console.log("running launch browser executor");
-    return true;
 }
