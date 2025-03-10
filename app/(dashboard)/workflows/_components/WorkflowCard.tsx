@@ -11,6 +11,7 @@ import { FileTextIcon, MoreVerticalIcon, PlaneIcon, ShuffleIcon, TrashIcon } fro
 import Link from "next/link";
 import React, { useState } from "react";
 import DeleteWorkflowDialog from "./DeleteWorkflowDialog";
+import RunBtn from "./RunBtn";
 
 const statusColor = {
   [WorkflowStatus.DRAFT]: "bg-yellow-400 text-yellow-600",
@@ -37,6 +38,7 @@ const WorkflowCard = ({ workflow }: { workflow: Workflow }) => {
             )}
           </div>
           <div>
+
           <h3 className="text-base font-bold text-muted-foreground flex items-center">
             <Link
               href={`/workflow/editor/${workflow.id}`}
@@ -53,6 +55,7 @@ const WorkflowCard = ({ workflow }: { workflow: Workflow }) => {
           </div>
         </div>
             <div className="flex items-center space-x-2" >
+              {!isDraft && <RunBtn workflowId={workflow.id} />}
                 <Link
                 href={`/workflow/editor/${workflow.id}`}
                 className={cn(
