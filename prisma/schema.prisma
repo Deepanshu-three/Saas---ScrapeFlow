@@ -21,12 +21,15 @@ model Workflow {
   creditsCost Int @default(0)
   status     String
 
+  cron String? 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   lastRunAt DateTime?
   lastRunId String?
   lastRunStatus String?
+  nextRunAt DateTime?
 
 
   executions WorkflowExecution[]
