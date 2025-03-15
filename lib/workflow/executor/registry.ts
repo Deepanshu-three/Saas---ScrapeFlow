@@ -4,6 +4,9 @@ import { PageToHtmlExecutor } from "./PageToHtmlExecutor";
 import { ExecutionEnvironment } from "@/types/executor";
 import { WorkflowTask } from "@/types/workflow";
 import { ExtractTextFromElementExecutor } from "./ExtractTextFromElementExecutor";
+import { FillInputExecutor } from "./FIllInputExecutor";
+import { ClickElementExecutor } from "./ClickElementExecutor";
+import { WaitForElementExecutor } from "./WaitForElementExecutor";
 
 type ExecutorFn<T extends WorkflowTask> = (environment: ExecutionEnvironment<T>) => Promise<boolean>
 
@@ -14,5 +17,8 @@ type RegistryType = {
 export const ExecutorRegistry: RegistryType = {
     LAUNCH_BROWSER: LaunchBrowserExecutor,
     PAGE_TO_HTML: PageToHtmlExecutor,
-    EXTRACT_TEXT_FROM_ELEMENTS: ExtractTextFromElementExecutor
+    EXTRACT_TEXT_FROM_ELEMENTS: ExtractTextFromElementExecutor,
+    FILL_INPUT: FillInputExecutor,
+    CLICK_ELEMENT: ClickElementExecutor,
+    WAIT_FOR_ELEMENT: WaitForElementExecutor
 }
