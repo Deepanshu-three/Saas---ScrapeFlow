@@ -30,12 +30,16 @@ export async function ExtractTextFromElementExecutor(
 
         const element = $(selector)
 
+        console.log("@@ELEMENT: ", element)
+
         if(!element){
             environment.log.error("Element not found")
             return false;
         }
         
         const extractedText = $.text(element)
+
+        console.log("@@ELEMENT TEXT: ", extractedText)
 
         if(!extractedText){
             environment.log.error("Element has no text");

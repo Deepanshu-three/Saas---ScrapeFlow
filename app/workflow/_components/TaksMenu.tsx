@@ -14,7 +14,7 @@ import React from "react";
 function TaksMenu() {
   return (
     <aside className="w-[340px] min-w-[340px] max-w-[340px] border-r-2 border-separate h-full p-2 px-2 overflow-auto">
-      <Accordion type="multiple" className="w-full" defaultValue={["extraction", "interactions", "timing"]}>
+      <Accordion type="multiple" className="w-full" defaultValue={["extraction", "interactions", "timing", "result"]}>
         <AccordionItem value="interactions">
           <AccordionTrigger className="font-bold">
            User Interations
@@ -39,6 +39,14 @@ function TaksMenu() {
           </AccordionTrigger>
           <AccordionContent className="flex flex-col gap-1">
             <TaskMenuButton taskType={TaskType.WAIT_FOR_ELEMENT} />
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="result">
+          <AccordionTrigger className="font-bold">
+          Result delivery
+          </AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-1">
+            <TaskMenuButton taskType={TaskType.DELIVER_VIA_WEBHOOK} />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
