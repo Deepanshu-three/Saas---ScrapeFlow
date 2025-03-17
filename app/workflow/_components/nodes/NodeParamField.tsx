@@ -7,6 +7,7 @@ import { AppNode } from "@/types/appNode";
 import { useCallback } from "react";
 import BrowserInstanceParam from "./params/BrowserInstanceParam";
 import SelectParam from "./params/SelectParam";
+import CredentialParam from "./params/CredentialParam";
 
 function NodeParamField({
     param,
@@ -49,6 +50,15 @@ function NodeParamField({
         case TaskParamType.SELECT:
             return (
                 <SelectParam
+                    param={param}
+                    value={value}
+                    updateNodeParamValue={updateNodeParamValue}
+                    disabled={disabled}
+                />
+            );
+        case TaskParamType.CREDENTIAL:
+            return (
+                <CredentialParam
                     param={param}
                     value={value}
                     updateNodeParamValue={updateNodeParamValue}
