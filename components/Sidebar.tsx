@@ -7,7 +7,7 @@ import {
   MenuIcon,
   ShieldCheckIcon,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,7 +17,7 @@ import UserAvailableCreditsBadge from "./UserAvailableCreditsBadge";
 
 const routes = [
   {
-    href: "",
+    href: "/",
     label: "Home",
     icon: HomeIcon,
   },
@@ -42,9 +42,9 @@ function DesktopSidebar() {
   const pathname = usePathname();
   const activeRoute = routes.find(
     (route) =>
-      (route.href.length > 0 && pathname.includes(route.href)) || routes[0]
-  );
-
+      route.href.length > 0 && pathname.includes(route.href)
+  ) || routes[0];
+  
   return (
     <div
       className="hidden relative md:block min-w-[280px] max-w-[280px] h-screen overflow-hidden w-full bg-primary/5
@@ -82,8 +82,8 @@ function MobileSidebar() {
   const pathname = usePathname();
   const activeRoute = routes.find(
     (route) =>
-      (route.href.length > 0 && pathname.includes(route.href)) || routes[0]
-  );
+      (route.href.length > 0 && pathname.includes(route.href))
+  ) || routes[0];
 
   return (
     <div className="block border-separate bg-background md:hidden">
